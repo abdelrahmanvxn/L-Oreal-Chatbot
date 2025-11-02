@@ -20,44 +20,155 @@ body {
 
 /* header */
 .site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
   text-align: center;
-  padding-top: 50px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between logo and text */
+}
+
+.site-logo {
+  max-width: 150px; /* Increase logo size */
+  height: auto;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-bottom: 10px;
+  font-size: 32px; /* Bigger header text */
+  font-weight: 700;
+  color: #000000; /* Change header text to black */
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 /* chat window */
 .chatbox {
-  margin: 40px 0;
+  margin-top: 15px; /* or more for balance */
 }
 
 .chat-window {
-  height: 360px;
-  border: 1px solid #000;
+  width: 100%; /* Wider: from 90% → 95% */
+  max-width: 1800px; /* Increase overall limit */
+  margin: 0 auto;
+  height: 70vh; /* Maintain height for visibility */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+  background-color: #ffffff; /* Radiant white for clarity */
+  border: 2px solid #e3a535; /* Eternal gold border for premium feel */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  font-size: 18px;
-  line-height: 1.5;
-  overflow-y: auto;
-  background: #fafafa;
-  white-space: pre-line;
+  display: flex;
+  flex-direction: column; /* Ensure messages stack vertically */
+  gap: 10px; /* Add spacing between messages */
+  animation: fadeIn 0.5s ease-in-out, slideUp 0.5s ease-in-out;
 }
 
-/* messages */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Add fade-in animation for new messages */
 .msg {
+  animation: fadeInMessage 0.5s ease-in-out;
+}
+
+/* Style for distinct message bubbles */
+.msg {
+  display: inline-block;
+  max-width: 70%;
+  padding: 10px 15px;
   margin-bottom: 14px;
+  border-radius: 20px;
   line-height: 1.5;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+@keyframes fadeInMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .msg.user {
-  color: #000;
+  background-color: #ff003b; /* Passionate red for user messages */
+  color: #ffffff; /* Radiant white text */
+  align-self: flex-end;
+  text-align: right;
+  border-radius: 20px 20px 0 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .msg.ai {
-  color: #666666;
+  background-color: #000000; /* Iconic black for assistant messages */
+  color: #ffffff; /* Radiant white text */
+  align-self: flex-start;
+  text-align: left;
+  border-radius: 20px 20px 20px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Typing indicator animation */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background-color: #000000; /* Iconic black for assistant */
+  border-radius: 50%;
+  animation: bounce 1.5s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.8);
+  }
+  40% {
+    transform: scale(1.2);
+  }
 }
 
 /* input row */
@@ -68,21 +179,34 @@ body {
 }
 
 .chat-form input {
-  flex: 1;
+  width: 95%; /* Match the chat window width */
+  max-width: 1800px; /* Same limit */
   padding: 12px;
-  border: 1px solid #ccc;
-  font-size: 18px;
+  border: 2px solid #e3a535; /* Eternal gold border */
+  border-radius: 8px;
+  font-size: 16px;
+  margin: 0 auto; /* Center the input field */
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
-  outline-offset: 2px;
+  border-color: #ff003b; /* Passionate red focus border */
+  outline: none;
+}
+
+.chat-form input:focus ~ button {
+  background-color: #ff003b; /* Turn send button red */
+  color: #ffffff;
+}
+
+/* Ensure chat window highlights red when input is focused */
+.chat-form input:focus ~ .chat-window {
+  border-color: #ff003b; /* Turn chat window border red */
 }
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
-  color: #fff;
+  background-color: #000000; /* Iconic black for button */
+  color: #ffffff; /* Radiant white text */
   border: none;
   padding: 12px;
   width: 48px;
@@ -99,7 +223,8 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background-color: #e3a535;
+  color: #000;
 }
 
 .chat-form button:focus {
@@ -140,4 +265,79 @@ body {
 
 .site-footer a:hover {
   color: #666666;
+}
+
+/* Highlight chat window when active */
+.chat-window.active {
+  border-color: #ff003b; /* Highlight red */
+  box-shadow: 0 0 10px rgba(255, 0, 59, 0.3);
+}
+
+/* Responsive design for all devices */
+@media (max-width: 768px) {
+  .page-wrapper {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .chat-window {
+    height: 60vh; /* Adjust height for smaller screens */
+    padding: 10px;
+  }
+
+  .chat-form input {
+    width: 85%; /* Reduce input width */
+  }
+
+  .chat-form button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .site-title {
+    font-size: 24px; /* Adjust font size for smaller screens */
+  }
+
+  .site-logo {
+    max-width: 100px; /* Adjust logo size */
+  }
+
+  .site-header {
+    flex-direction: column; /* Stack logo and text vertically */
+    align-items: center;
+  }
+
+  .site-logo {
+    position: static; /* Remove absolute positioning */
+    margin-bottom: 10px; /* Add spacing below the logo */
+  }
+
+  .site-title {
+    text-align: center; /* Center the header text */
+    font-size: 20px; /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-window {
+    height: 50vh; /* Further adjust height for very small screens */
+  }
+
+  .chat-form input {
+    font-size: 14px; /* Adjust font size for input */
+  }
+
+  .chat-form button {
+    font-size: 16px;
+  }
+
+  .msg {
+    font-size: 12px; /* Adjust message font size */
+  }
+}
+
+@media (min-width: 768px) {
+  .site-header {
+    gap: 20px; /* Add spacing between logo and header text */
+  }
 }

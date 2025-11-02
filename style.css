@@ -94,45 +94,67 @@ body {
   animation: fadeInMessage 0.5s ease-in-out;
 }
 
-/* Style for distinct message bubbles */
+/* General bubble styling */
 .msg {
+  display: inline-block; /* bubble wraps only content width */
+  max-width: 80%; /* prevents overly wide lines */
+  padding: 10px 16px;
+  margin: 8px 12px;
+  border-radius: 18px;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* preserves line breaks */
+  line-height: 1.6;
+  font-size: 15px;
+  animation: fadeInMessage 0.4s ease;
+}
+
+/* AI message bubble */
+.msg.ai {
+  display: inline-block;
+  max-width: 88%; /* wider, but still responsive */
+  background: linear-gradient(180deg, #fffaf2, #fffefb);
+  border: 1.5px solid #e3a535;
+  color: #111;
+  align-self: flex-start;
+  border-radius: 18px 18px 18px 6px;
+  text-align: left;
+  padding: 12px 18px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+/* User message bubble */
+.msg.user {
   display: inline-block;
   max-width: 70%;
-  padding: 10px 15px;
-  margin-bottom: 14px;
-  border-radius: 20px;
-  line-height: 1.5;
-  word-wrap: break-word;
-  font-size: 14px;
-}
-
-@keyframes fadeInMessage {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.msg.user {
-  background-color: #ff003b; /* Passionate red for user messages */
-  color: #ffffff; /* Radiant white text */
+  background-color: #ff003b;
+  color: #fff;
   align-self: flex-end;
-  text-align: right;
-  border-radius: 20px 20px 0 20px;
+  border-radius: 18px 18px 6px 18px;
+  text-align: left;
+  padding: 10px 16px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
 
-.msg.ai {
-  background-color: #000000; /* Iconic black for assistant messages */
-  color: #ffffff; /* Radiant white text */
-  align-self: flex-start;
-  text-align: left;
-  border-radius: 20px 20px 20px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Optional: Make "You:" label more subtle */
+.msg.user::before {
+  content: "You";
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+/* Optional: adjust paragraph/list inside bubbles */
+.msg.ai p,
+.msg.ai ul {
+  margin: 8px 0;
 }
 
 /* Typing indicator animation */
@@ -273,6 +295,13 @@ body {
   box-shadow: 0 0 10px rgba(255, 0, 59, 0.3);
 }
 
+/* When the input is focused, highlight the AI bubble border */
+.chat-window.active .msg.ai {
+  border-color: #ff003b; /* Passionate red */
+  box-shadow: 0 0 8px rgba(255, 0, 59, 0.25); /* soft red glow */
+  transition: all 0.3s ease;
+}
+
 /* Responsive design for all devices */
 @media (max-width: 768px) {
   .page-wrapper {
@@ -315,6 +344,11 @@ body {
   .site-title {
     text-align: center; /* Center the header text */
     font-size: 20px; /* Adjust font size for smaller screens */
+  }
+
+  .msg {
+    max-width: 90%;
+    font-size: 14px;
   }
 }
 

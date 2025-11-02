@@ -14,11 +14,30 @@ const messages = [
   },
 ];
 
-// Helper: append a message to the chat window
+// Helper: Convert Markdown to HTML
+function markdownToHtml(markdown) {
+  return (
+    markdown
+      // Bold **text**
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      // Italic *text* or _text_
+      .replace(/(\*|_)(.*?)\1/g, "<em>$2</em>")
+      // Bullet points
+      .replace(/^- (.*$)/gim, "<li>$1</li>")
+      // Numbered lists
+      .replace(/^\d+\. (.*$)/gim, "<li>$1</li>")
+      // Line breaks
+      .replace(/\n/g, "<br>")
+      // Wrap lists in <ul>
+      .replace(/(<li>.*<\/li>)/gim, "<ul>$1</ul>")
+  );
+}
+
+// Helper: append a message to the chat window with Markdown support
 function appendMessage(text, sender = "ai") {
   const div = document.createElement("div");
   div.className = `msg ${sender}`;
-  div.textContent = sender === "user" ? `You: ${text}` : text;
+  div.innerHTML = sender === "user" ? `${text}` : markdownToHtml(text); // Use markdownToHtml to parse Markdown
   chatWindow.appendChild(div);
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
@@ -113,5 +132,10 @@ chatForm.addEventListener("submit", async (e) => {
 });
 
 /* Add focus and blur event listeners to toggle chat window highlight */
-userInput.addEventListener("focus", () => chatWindow.classList.add("active"));
-userInput.addEventListener("blur", () => chatWindow.classList.remove("active"));
+userInput.addEventListener("focus", () => {
+  chatWindow.classList.add("active");
+});
+
+userInput.addEventListener("blur", () => {
+  chatWindow.classList.remove("active");
+});
